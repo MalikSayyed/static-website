@@ -10,7 +10,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 // This step will clone your Git repository containing the website code.
-                git 'https://github.com/MalikSayyed/react-app-new.git'
+                git 'https://github.com/MalikSayyed/static-website.git'
             }
         }
         
