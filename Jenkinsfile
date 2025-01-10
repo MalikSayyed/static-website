@@ -9,16 +9,8 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                // This step will clone your Git repository containing the website code.
+                // Clone the repository containing your website files.
                 git 'https://github.com/MalikSayyed/static-website.git'
-            }
-        }
-        
-        stage('Build') {
-            steps {
-                // If you're using a static website, you might not need to build anything.
-                // But if you need to, this is where you would build your website (e.g., run npm build for a React app).
-                echo 'Building your website...'
             }
         }
 
@@ -27,7 +19,7 @@ pipeline {
                 script {
                     // Using the credentials stored in Jenkins
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
-                        // This step uploads all files in the current directory (your website files) to your S3 bucket
+                        // Sync the current directory (where the files are cloned) to S3
                         sh """
                         aws s3 sync . s3://${S3_BUCKET_NAME}/ --region ${REGION} --delete
                         """
